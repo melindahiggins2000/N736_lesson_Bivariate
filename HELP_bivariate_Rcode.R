@@ -1,12 +1,11 @@
 #' =======================================
 #' Working with the HELP dataset
 #' 
-#' Bivariate Stats
-#' 
 #' Melinda Higgins, PhD
-#' dated 09/19/2017
+#' last updated 10/01/2018
 #' =======================================
 
+# load packages
 library(dplyr)
 library(tidyverse)
 
@@ -15,11 +14,23 @@ library(tidyverse)
 #
 # download the dataset and put it in your working directory
 
+# check your working directory using getwd()
+getwd()
+
+# if you need to, you can change your working
+# directory using setwd("C:/MyDirectory")
+
 # load the dataset help.Rdata
 load("help.Rdata")
 
-# list variables in HELP dataset
+# this loads the data frame "helpdata"
+# list of variable names in dataset
 names(helpdata)
+
+# This dataset has 453 observations and 88 vars
+# various r functions for getting data.frame
+# dimensions. 
+dim(helpdata)
 
 # let's look at age, female, racegrp, cesd, pcs and mcs.
 helpset1 <- helpdata %>%
@@ -147,6 +158,7 @@ stat.desc(helpset1[,vars],
           basic=TRUE,
           norm=TRUE)
 
+# OPTIONAL - for Rmarkdown
 # we can use knitr::kable()
 # with rmarkdown to get a nice table
 stat.table <- stat.desc(helpset1[,vars], 
