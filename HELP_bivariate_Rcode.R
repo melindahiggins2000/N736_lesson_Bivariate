@@ -34,7 +34,7 @@ dim(helpdata)
 
 # let's look at age, female, racegrp, cesd, pcs and mcs.
 helpset1 <- helpdata %>%
-  select(age, female, racegrp, cesd, pcs, mcs)
+  select(age, female, racegrp, cesd, pcs, mcs, treat)
 
 # simple summary
 summary(helpset1)
@@ -226,6 +226,18 @@ options(digits=8)
 t.test(age ~ female, helpset1)
 t.test(cesd ~ female, helpset1)
 
+# R defaults to unpooled t-test
+# var.equal = FALSE by default
+# change to var.equal = TRUE
+t.test(age ~ female, 
+       var.equal = TRUE,
+       helpset1)
+
+# check equal variances
+# ideally run this first
+# to see if you need var.equal = TRUE or FALSE
+bartlett.test(age ~ female, helpset1)
+
 # non-parametric 2-group tests
 # Mann Whitney U test
 wilcox.test(age ~ female, helpset1)
@@ -256,3 +268,32 @@ CrossTable(helpset1$race3, helpset1$female,
            prop.chisq=FALSE,
            chisq=TRUE,
            fisher=TRUE)
+
+
+ct <- CrossTable(helpset1$racegrp, helpset1$treat,
+           expected=TRUE,
+           prop.r=FALSE,
+           prop.t=FALSE,
+           prop.chisq=FALSE,
+           chisq=TRUE,
+           fisher=TRUE)
+
+chisq.test(helpset1$racegrp, helpset1$treat)
+
+chisq.test(helpset1$racegrp, helpset1$treat,
+           correct = FALSE)
+
+
+
+CrossTable(mtcars$am, mtcars$vs,
+           expected=TRUE,
+           prop.r=FALSE,
+           prop.t=FALSE,
+           prop.chisq=FALSE,
+           chisq=TRUE,
+           fisher=TRUE)
+
+chisq.test(mtcars$am, mtcars$vs,
+           correct = FALSE)
+
+chisq.test(mtcars$am, mtcars$vs)
