@@ -49,6 +49,8 @@ helpset1$femaleF <- factor(helpset1$female,
 table(helpset1$female)
 table(helpset1$femaleF)
 
+table(helpset1$racegrp)
+
 # let's merge hispanic/other together for race
 helpset1$race3[helpset1$racegrp == "black"] <- "Black"
 helpset1$race3[helpset1$racegrp == "white"] <- "White"
@@ -252,7 +254,7 @@ library(gmodels)
 CrossTable(helpset1$race3, helpset1$female)
 
 # remove row%, total%, chisq contribution
-CrossTable(helpset1$race3, helpset1$female,
+CrossTable(helpset1$race3, helpset1$femaleF,
            expected=TRUE,
            prop.r=FALSE,
            prop.t=FALSE,
